@@ -7,9 +7,12 @@ class VendingMachine
   MONEY = [10, 50, 100, 500, 1000].freeze
 
   # （自動販売機に投入された金額をインスタンス変数の @slot_money に代入する）
+  # （自動販売機に補充されたドリンクをインスタンス変数の @stock_drink に代入する）
   def initialize
     # 最初の自動販売機に入っている金額は0円
+    # 最初の自動販売機に入っているドリンクは５本
     @slot_money = 0
+    @stock_drink = 5
   end
 
   # 投入金額の総計を取得できる。
@@ -34,5 +37,30 @@ class VendingMachine
     puts @slot_money
     # 自動販売機に入っているお金を0円に戻す
     @slot_money = 0
+  end
+
+  # ドリンクを補充する
+  def store(name)
+    drink["name"]
+  end
+
+  # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
+  def current_stock_drink
+    @stock_drink
+  end
+
+  # 補充されたドリンクの本数
+  def stock_drink(num)
+    @stock_drink += num
+  end
+
+end
+
+class Drink
+  attr_reader :price, :name
+
+  def initialize
+    @price = 120
+    @name = "coke"
   end
 end
