@@ -10,9 +10,11 @@ class VendingMachine
   # （自動販売機に補充されたドリンクをインスタンス変数の @stock_drink に代入する）
   def initialize
     # 最初の自動販売機に入っている金額は0円
-    # 最初の自動販売機に入っているドリンクは５本
     @slot_money = 0
-    @stock_drink = 5
+    # 最初の自動販売機に入っているドリンクは0本
+    @stock_drink = []
+    @stock_drink = 
+    
   end
 
   # 投入金額の総計を取得できる。
@@ -57,10 +59,10 @@ class VendingMachine
 end
 
 class Drink
-  attr_reader :price, :name
+  attr_reader :name, :price
 
-  def initialize
-    @price = 120
-    @name = "coke"
+  def initialize (name, price)
+    @price = price
+    @name = name
   end
 end
