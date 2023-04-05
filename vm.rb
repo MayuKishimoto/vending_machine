@@ -1,7 +1,7 @@
 class VendingMachine
   # ステップ０　お金の投入と払い戻しの例コード
   # ステップ１　扱えないお金の例コード
-  # ステップ２  ごめんなさい
+  # ステップ２
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
@@ -11,10 +11,11 @@ class VendingMachine
   def initialize
     # 最初の自動販売機に入っている金額は0円
     @slot_money = 0
-    # 最初の自動販売機に入っているドリンクは0本
-    @stock_drink = []
-    @stock_drink = 
+    # 最初の自動販売機に入っているドリンクは0本(２次元配列を初期化)
+    @stock_drink = Hash.new { |h,k| h[k] = {} }
     
+    # コーラ５本を実体化して格納
+    5.times { store(Drink.coke) }
   end
 
   # 投入金額の総計を取得できる。
@@ -42,19 +43,24 @@ class VendingMachine
   end
 
   # ドリンクを補充する
-  def store(name)
-    drink["name"]
+  def store(drink)
+    # 初めて呼び出された時(初めて格納する時)は0を入れる
+    if @stock_drink[drink.name]["stock"].nil? 
+      @stock_drink[drink.name]["stock"] = 0
+    end
+    @stock_drink[drink.name]["price"] = drink.price
+    @stock_drink[drink.name]["stock"] += 1
   end
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
-  def current_stock_drink
-    @stock_drink
-  end
+  #def current_stock_drink
+  #  @stock_drink
+  #end
 
   # 補充されたドリンクの本数
-  def stock_drink(num)
-    @stock_drink += num
-  end
+  #def stock_drink(num)
+  #  @stock_drink += num
+  #end
 
 end
 
@@ -62,7 +68,13 @@ class Drink
   attr_reader :name, :price
 
   def initialize (name, price)
-    @price = price
     @name = name
+    @price = price
+  end
+
+  # コーラを生成
+  def self.coke
+    self.new("coke", 120)
   end
 end
+
