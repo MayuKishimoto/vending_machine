@@ -12,8 +12,9 @@ class VendingMachine
     # 最初の自動販売機に入っている金額は0円
     @slot_money = 0
     # 最初の自動販売機に入っているドリンクは0本(２次元配列を初期化)
+    @stock_id = 1
     @stock_drink = Hash.new { |h,k| h[k] = {} }
-    
+    @sale_amount = 0
     # コーラ５本を実体化して格納
     5.times { store(Drink.coke) }
   end
@@ -50,12 +51,32 @@ class VendingMachine
     end
     @stock_drink[drink.name]["price"] = drink.price
     @stock_drink[drink.name]["stock"] += 1
+    @stock_id += 1
   end
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
-  #def current_stock_drink
-  #  @stock_drink
-  #end
+  def current_stock_drink
+    @stock_drink.each.with_index(0) { |drink,i| puts "#{i}: #{drink}" }
+  end
+
+  # 購入判定（true か falseを出力）
+  def purchase_judge
+    current_slot_money > @stock_drink["coke"]["price"]
+  end
+
+  # 購入操作
+  def purchase
+    puts purchase_judge
+    if purchase_judge
+      puts "買えてます！"
+      # 買える
+      # ジュースの在庫を減らし、
+      @stock_drink["coke"]["stock"] -= 1
+      # 売り上げ金額を増やす。
+      @sale_amount += current_stock_drink["coke"]["price"]
+      # 買えません（購入操作を行っても何もしない。）
+    end
+  end
 
   # 補充されたドリンクの本数
   #def stock_drink(num)
@@ -76,5 +97,16 @@ class Drink
   def self.coke
     self.new("coke", 120)
   end
+
+  # レッドブルを生成
+  def self.redbull
+    self.new("redbull", 200)
+  end
+
+  # 水を生成
+  def self.water
+    self.new("water", 100)
+  end
+
 end
 
