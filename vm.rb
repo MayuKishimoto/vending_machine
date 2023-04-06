@@ -14,7 +14,7 @@ class VendingMachine
     # 最初の自動販売機に入っているドリンクは0本(２次元配列を初期化)
     @stock_id = 1
     @stock_drink = Hash.new { |h,k| h[k] = {} }
-    
+    @sale_amount = 0
     # コーラ５本を実体化して格納
     5.times { store(Drink.coke) }
   end
@@ -61,11 +61,21 @@ class VendingMachine
 
   # 購入判定（true か falseを出力）
   def purchase_judge
-    puts current_slot_money > @stock_drink["coke"]["price"]
+    current_slot_money > @stock_drink["coke"]["price"]
   end
 
   # 購入操作
   def purchase
+    puts purchase_judge
+    if purchase_judge
+      puts "買えてます！"
+      # 買える
+      # ジュースの在庫を減らし、
+      @stock_drink["coke"]["stock"] -= 1
+      # 売り上げ金額を増やす。
+      @sale_amount += current_stock_drink["coke"]["price"]
+      # 買えません（購入操作を行っても何もしない。）
+    end
   end
 
   # 補充されたドリンクの本数
