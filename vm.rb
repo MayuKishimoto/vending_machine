@@ -2,6 +2,7 @@ class VendingMachine
   # ステップ０　お金の投入と払い戻しの例コード
   # ステップ１　扱えないお金の例コード
   # ステップ２
+  
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
@@ -61,7 +62,7 @@ class VendingMachine
 
   # 購入判定（true か falseを出力）
   def purchase_judge
-    current_slot_money > @stock_drink["coke"]["price"]
+    current_slot_money > @stock_drink["coke"]["price"] && @stock_drink["coke"]["stock"] > 0
   end
 
   # 購入操作
@@ -74,14 +75,15 @@ class VendingMachine
       @stock_drink["coke"]["stock"] -= 1
       # 売り上げ金額を増やす。
       @sale_amount += current_stock_drink["coke"]["price"]
+      @slot_money -= current_stock_drink["coke"]["price"]
       # 買えません（購入操作を行っても何もしない。）
     end
   end
 
-  # 補充されたドリンクの本数
-  #def stock_drink(num)
-  #  @stock_drink += num
-  #end
+  # 売上金額の取得
+  def current_sale_amount
+    puts @sale_amount
+  end
 
 end
 
