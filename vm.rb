@@ -1,3 +1,5 @@
+require_relative "drink"
+
 class VendingMachine
   # ステップ０　お金の投入と払い戻しの例コード
   # ステップ１　扱えないお金の例コード
@@ -18,7 +20,7 @@ class VendingMachine
     @stock_drink = Hash.new { |h, k| h[k] = {} }
     @sale_amount = 0
     # コーラ５本を実体化して格納
-    5.times { store(Drink.coke) }
+    store(Drink.coke, 5)
   end
 
   # 投入金額の総計を取得できる。
@@ -46,24 +48,29 @@ class VendingMachine
   end
 
   # ドリンクを補充する
-  def store(drink)
+  def store(drink, num)
     # 初めて呼び出された時(初めて格納する時)は0を入れる
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
     end
-    @stock_drink[drink.name]['price'] = drink.price
-    @stock_drink[drink.name]['stock'] += 1
+
+    num.times {
+      @stock_drink[drink.name]['price'] = drink.price
+      @stock_drink[drink.name]['stock'] += 1
+    }
   end
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
   def current_stock_drink
-    @stock_drink.each.with_index(0) { |drink, i| puts "#{i}: #{drink}" }
+    @stock_drink.each do |drink|
+      puts "#{drink[0]} -> 値段: #{drink[1]['price']}円 在庫: #{drink[1]['stock']}本"
+    end
   end
 
   # 購入判定（true か falseを出力）
   def purchase_judge(drink_name)
-    current_slot_money >= @stock_drink[drink_name]['price'] &&
-    @stock_drink[drink_name]['stock'] > 0
+      current_slot_money >= @stock_drink[drink_name]['price'] &&
+      @stock_drink[drink_name]['stock'] > 0
   end
 
   # 購入操作
@@ -90,38 +97,11 @@ class VendingMachine
 
   # 購入可能なドリンクのリストを取得
   def purchasable_list
-    if purchase_judge("coke")
-      puts 'コーラが買えます'
+    @stock_drink.each do |drink|
+      drink_name = drink[0];
+      if purchase_judge(drink_name)
+          puts "#{drink_name}が買えます"
+      end
     end
-    if purchase_judge("redbull")
-      puts 'レッドブルが買えます'
-    end
-    if purchase_judge("water")
-      puts '水が買えます'
-    end
-  end
-end
-
-class Drink
-  attr_reader :name, :price
-
-  def initialize(name, price)
-    @name = name
-    @price = price
-  end
-
-  # コーラを生成
-  def self.coke
-    self.new('coke', 120)
-  end
-
-  # レッドブルを生成
-  def self.redbull
-    self.new('redbull', 200)
-  end
-
-  # 水を生成
-  def self.water
-    self.new('water', 100)
   end
 end
