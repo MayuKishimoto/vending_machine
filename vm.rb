@@ -20,7 +20,7 @@ class VendingMachine
     @stock_drink = Hash.new { |h, k| h[k] = {} }
     @sale_amount = 0
     # コーラ５本を実体化して格納
-    5.times { store(Drink.coke) }
+    store(Drink.coke, 5)
   end
 
   # 投入金額の総計を取得できる。
@@ -48,13 +48,16 @@ class VendingMachine
   end
 
   # ドリンクを補充する
-  def store(drink)
+  def store(drink, num)
     # 初めて呼び出された時(初めて格納する時)は0を入れる
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
     end
-    @stock_drink[drink.name]['price'] = drink.price
-    @stock_drink[drink.name]['stock'] += 1
+
+    num.times {
+      @stock_drink[drink.name]['price'] = drink.price
+      @stock_drink[drink.name]['stock'] += 1
+    }
   end
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
