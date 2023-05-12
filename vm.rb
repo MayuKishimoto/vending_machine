@@ -2,7 +2,8 @@ class VendingMachine
   # ステップ０　お金の投入と払い戻しの例コード
   # ステップ１　扱えないお金の例コード
   # ステップ２  ジュースの管理
-  # ステップ3 　購入
+  # ステップ３ 　購入
+  # ステップ４　機能拡張
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
@@ -13,7 +14,6 @@ class VendingMachine
     # 最初の自動販売機に入っている金額は0円
     @slot_money = 0
     # 最初の自動販売機に入っているドリンクは0本(２次元配列を初期化)
-    @stock_id = 1
     @stock_drink = Hash.new { |h, k| h[k] = {} }
     @sale_amount = 0
     # コーラ５本を実体化して格納
@@ -52,7 +52,6 @@ class VendingMachine
     end
     @stock_drink[drink.name]['price'] = drink.price
     @stock_drink[drink.name]['stock'] += 1
-    @stock_id += 1
   end
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
@@ -63,21 +62,17 @@ class VendingMachine
   # 購入判定（true か falseを出力）
   def purchase_judge(drink_name)
     current_slot_money >= @stock_drink[drink_name]['price'] &&
-      @stock_drink[drink_name]['stock'] > 0
+    @stock_drink[drink_name]['stock'] > 0
   end
 
   # 購入操作
   def purchase(drink_name)
-    puts purchase_judge(drink_name)
     if purchase_judge(drink_name)
-      puts '買えてます！'
-      # 買える
       # ジュースの在庫を減らし、
       @stock_drink[drink_name]['stock'] -= 1
       # 売り上げ金額を増やす。
       @sale_amount += current_stock_drink[drink_name]['price']
       @slot_money -= current_stock_drink[drink_name]['price']
-      # 買えません（購入操作を行っても何もしない。）
     end
   end
 
@@ -86,6 +81,7 @@ class VendingMachine
     puts @sale_amount
   end
 
+  # 購入可能なドリンクのリストを取得
   def purchasable_list
     if purchase_judge("coke")
       puts 'コーラが買えます'

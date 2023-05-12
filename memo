@@ -1,0 +1,4 @@
+require '/Users/kishimotomayu/workspace/work/vending_machine/vm.rb'
+m = VendingMachine.new
+m.slot_money(500)
+m.purchase("coke")
