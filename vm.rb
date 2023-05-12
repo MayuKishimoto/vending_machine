@@ -95,38 +95,11 @@ class VendingMachine
 
   # 購入可能なドリンクのリストを取得
   def purchasable_list
-    if purchase_judge("coke")
-      puts 'コーラが買えます'
-    end
-    if purchase_judge("redbull")
-      puts 'レッドブルが買えます'
-    end
-    if purchase_judge("water")
-      puts '水が買えます'
+    @stock_drink.each do |drink|
+      drink_name = drink[0];
+      if purchase_judge(drink_name)
+          puts "#{drink_name}が買えます"
+      end
     end
   end
 end
-
-# class Drink
-#   attr_reader :name, :price
-
-#   def initialize(name, price)
-#     @name = name
-#     @price = price
-#   end
-
-#   # コーラを生成
-#   def self.coke
-#     self.new('coke', 120)
-#   end
-
-#   # レッドブルを生成
-#   def self.redbull
-#     self.new('redbull', 200)
-#   end
-
-#   # 水を生成
-#   def self.water
-#     self.new('water', 100)
-#   end
-# end
