@@ -62,13 +62,15 @@ class VendingMachine
 
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
   def current_stock_drink
-    @stock_drink.each.with_index(0) { |drink, i| puts "#{i}: #{drink}" }
+    @stock_drink.each do |drink|
+      puts "#{drink[0]} -> 値段: #{drink[1]['price']}円 在庫: #{drink[1]['stock']}本"
+    end
   end
 
   # 購入判定（true か falseを出力）
   def purchase_judge(drink_name)
-    current_slot_money >= @stock_drink[drink_name]['price'] &&
-    @stock_drink[drink_name]['stock'] > 0
+      current_slot_money >= @stock_drink[drink_name]['price'] &&
+      @stock_drink[drink_name]['stock'] > 0
   end
 
   # 購入操作
