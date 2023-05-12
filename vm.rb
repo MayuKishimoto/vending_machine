@@ -4,6 +4,7 @@ class VendingMachine
   # ステップ２  ジュースの管理
   # ステップ３ 　購入
   # ステップ４　機能拡張
+  # ステップ５　釣り銭と売り上げ管理
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
@@ -73,8 +74,14 @@ class VendingMachine
       # 売り上げ金額を増やす。
       @sale_amount += current_stock_drink[drink_name]['price']
       @slot_money -= current_stock_drink[drink_name]['price']
+      puts "釣り銭：#{@slot_money}円"
+      # display_change(drink_name)
     end
   end
+
+  # def display_change(drink_name)
+  #   puts @change = @slot_money - @stock_drink[drink_name]['price']
+  # end
 
   # 売上金額の取得
   def current_sale_amount
