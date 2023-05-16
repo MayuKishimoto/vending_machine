@@ -7,18 +7,24 @@ class VendingMachine
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
 
+  # 管理できるドリンクの種類の最大数
+  STOCK_MAX = 5.freeze
+
   def initialize
     # 最初に自動販売機に入っている投入金額は0円
     @slot_money = 0
+
     # 最初に自動販売機に入っているドリンクは0本(２次元配列を初期化)
     @stock_drink = Hash.new { |h, k| h[k] = {} }
+
     # 最初に自動販売機に入っている売上金額は0円
     @sale_amount = 0
+
     # コーラ５本を格納する。
     store(Drink.coke, 5)
 
-    # 稼働中の表示
-    display_message(1)
+    # 自販機の外観の表示
+    display_machine_exterior
   end
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
@@ -29,6 +35,7 @@ class VendingMachine
     return false unless MONEY.include?(money)
 
     # 自動販売機にお金を入れる。
+    display_insert_money(money)
     @slot_money += money
 
     # 金額をディスプレイに表示
@@ -68,13 +75,12 @@ class VendingMachine
       # 残金表示
       current_slot_money
     else
-      puts "購入できません。"
+      display_message(2)
     end
   end
 
   # ドリンクの形状の表現
   def drink_shape(drink_name)
-    puts ""
     case @stock_drink[drink_name]['type']
     # 1(=缶)の場合の表示
     when 1
@@ -85,7 +91,6 @@ class VendingMachine
     else
       puts "????"
     end
-    puts ""
   end
 
   # 購入判定（true か falseを出力）
@@ -97,7 +102,8 @@ class VendingMachine
   # 払い戻し操作を行うと、投入金額の総計を釣り銭として出力する。
   def return_money
     # 返すお金の金額を表示する。
-    puts "返却：#{@slot_money}円"
+    #puts "返却：#{@slot_money}円"
+    display_return_money(@slot_money)
     # 自動販売機に入っているお金を0円に戻す。
     @slot_money = 0
   end
@@ -108,8 +114,9 @@ class VendingMachine
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
     end
+
+    # ドリンクをnum回だけ格納する処理
     num.times {
-      ### stock以外の代入は意味があるだろうか？？？
       @stock_drink[drink.name]['type'] = drink.type
       @stock_drink[drink.name]['vol'] = drink.vol
       @stock_drink[drink.name]['temp'] = drink.type
