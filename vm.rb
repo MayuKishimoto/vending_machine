@@ -5,7 +5,7 @@ class VendingMachine
   MONEY = [10, 50, 100, 500, 1000].freeze
 
   # ドリンクが取出し口に落ちる音
-  FALLING_DRINK = ["カランコロン", "ガシャン", "ゴトン", "ポトン"].freeze
+  FALLING_DRINK = ["ｶﾗﾝｺﾛﾝ", "ｶﾞｼｬﾝ", "ｺﾞﾄﾝ"].freeze
 
   def initialize
     # 最初に自動販売機に入っている投入金額は0円
@@ -55,12 +55,41 @@ class VendingMachine
       # ジュースの在庫を減らす。
       @stock_drink[drink_name]['stock'] -= 1
       # ジュースを取り出し口に落とす表現
-      puts "#{FALLING_DRINK.shuffle.sample}..."
-      puts "#{drink_name}"
+      puts "#{FALLING_DRINK.shuffle.sample.rjust(26)}..."
+      #puts "#{drink_name}"
+      drink_shape(drink_name)
       # 残金表示
       current_slot_money
     else
       puts "購入できません。"
+    end
+  end
+
+  # ドリンクの形状の表現
+  def drink_shape(drink_name)
+    case @stock_drink[drink_name]['type']
+    # 1(=缶)の場合の表示
+    when 1
+      label = drink_name.center(18)
+      puts " ------------------------"
+      puts "|ミ                      |"
+      puts "|   ==================、 |"
+      puts "|  |                  |  |"
+      puts "|  |#{label}|  |"
+      puts "|   =================〃  |"
+      puts " ------------------------"
+    # 2(=ペットボトル)の場合の表示
+    when 2
+      label = drink_name.center(14)
+      puts " ------------------------"
+      puts "|ミ                      |"
+      puts "|   =============、      |"
+      puts "|  |              ---|   |"
+      puts "|  |#{label}---|   |"
+      puts "|   =============〃      |"
+      puts " ------------------------"
+    else
+      puts "????"
     end
   end
 
@@ -85,6 +114,7 @@ class VendingMachine
       @stock_drink[drink.name]['stock'] = 0
     end
     num.times {
+      @stock_drink[drink.name]['type'] = drink.type
       @stock_drink[drink.name]['price'] = drink.price
       @stock_drink[drink.name]['stock'] += 1
     }
@@ -94,7 +124,7 @@ class VendingMachine
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
   def current_stock_drink
     @stock_drink.each do |drink|
-      puts "#{drink[0]} -> 値段: #{drink[1]['price']}円 在庫: #{drink[1]['stock']}本"
+      puts "#{drink[0]} -> 種別: #{drink[1]['type']} 値段: #{drink[1]['price']}円 在庫: #{drink[1]['stock']}本"
     end
   end
 
