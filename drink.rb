@@ -23,4 +23,19 @@ class Drink
   def self.water
     self.new('water', 2, 500, 1, 100)
   end
+
+  # 綾鷹を生成
+  def self.ayataka
+    self.new('ayataka', 2, 500, 2, 140)
+  end
+
+  # BOSSを生成
+  def self.boss
+    self.new('boss', 1, 190, 1, 120)
+  end
+
+  # 午後の紅茶を生成
+  def self.gogo_tea
+    self.new('gogo_tea', 2, 500, 1, 140)
+  end
 end
