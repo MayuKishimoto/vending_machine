@@ -104,13 +104,15 @@ class VendingMachine
 
   # ドリンクを補充する。
   def store(drink, num)
-
     # 初めて呼び出された時(初めて格納する時)は0を入れる。
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
     end
     num.times {
+      ### stock以外の代入は意味があるだろうか？？？
       @stock_drink[drink.name]['type'] = drink.type
+      @stock_drink[drink.name]['vol'] = drink.vol
+      @stock_drink[drink.name]['temp'] = drink.type
       @stock_drink[drink.name]['price'] = drink.price
       @stock_drink[drink.name]['stock'] += 1
     }
@@ -120,7 +122,10 @@ class VendingMachine
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
   def current_stock_drink
     @stock_drink.each do |drink|
-      puts "#{drink[0]} -> 種別: #{drink[1]['type']}, 値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
+      puts
+      puts "#{drink[0]}"
+      puts "容器: #{drink[1]['type']}, 容量: #{drink[1]['temp']}ml,  温度: #{drink[1]['temp']},  値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
+      puts
     end
   end
 
