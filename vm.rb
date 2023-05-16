@@ -1,11 +1,11 @@
 require_relative "drink"
+require_relative "display"
 
 class VendingMachine
+  include Display
+
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
   MONEY = [10, 50, 100, 500, 1000].freeze
-
-  # ドリンクが取出し口に落ちる音
-  FALLING_DRINK = ["ｶﾗﾝｺﾛﾝ", "ｶﾞｼｬﾝ", "ｺﾞﾄﾝ"].freeze
 
   def initialize
     # 最初に自動販売機に入っている投入金額は0円
@@ -55,7 +55,6 @@ class VendingMachine
       # ジュースの在庫を減らす。
       @stock_drink[drink_name]['stock'] -= 1
       # ジュースを取り出し口に落とす表現
-      puts "#{FALLING_DRINK.shuffle.sample.rjust(26)}..."
       #puts "#{drink_name}"
       drink_shape(drink_name)
       # 残金表示
@@ -67,30 +66,18 @@ class VendingMachine
 
   # ドリンクの形状の表現
   def drink_shape(drink_name)
+    puts ""
     case @stock_drink[drink_name]['type']
     # 1(=缶)の場合の表示
     when 1
-      label = drink_name.center(18)
-      puts " ------------------------"
-      puts "|ミ                      |"
-      puts "|   ==================、 |"
-      puts "|  |                  |  |"
-      puts "|  |#{label}|  |"
-      puts "|   =================〃  |"
-      puts " ------------------------"
+      can_outlet(drink_name)
     # 2(=ペットボトル)の場合の表示
     when 2
-      label = drink_name.center(14)
-      puts " ------------------------"
-      puts "|ミ                      |"
-      puts "|   =============、      |"
-      puts "|  |              ---|   |"
-      puts "|  |#{label}---|   |"
-      puts "|   =============〃      |"
-      puts " ------------------------"
+      bottle_outlet(drink_name)
     else
       puts "????"
     end
+    puts ""
   end
 
   # 購入判定（true か falseを出力）
