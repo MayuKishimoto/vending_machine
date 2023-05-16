@@ -1,4 +1,12 @@
 require '/Users/kishimotomayu/workspace/work/vending_machine/vm.rb'
-m = VendingMachine.new
-m.slot_money(500)
-m.purchase("coke")
+vm = VendingMachine.new
+vm.slot_money(100)
+vm.slot_money(50)
+vm.current_slot_money
+vm.purchasable_list
+vm.purchase("coke")
+vm.return_money
+vm.store(Drink.redbull, 1)
+vm.store(Drink.water, 1)
+vm.current_stock_drink
+vm.current_sale_amount
