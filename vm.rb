@@ -30,7 +30,7 @@ class VendingMachine
 
   # 投入金額の総計を取得できる。
   def current_slot_money
-    puts "現在の投入金額：#{@slot_money}円"
+    display_current_money(@slot_money)
   end
 
   # 投入金額とストックを確認し、購入可能なドリンクのリストを取得する。
@@ -96,6 +96,7 @@ class VendingMachine
 
   # ドリンクを補充する。
   def store(drink, num)
+
     # 初めて呼び出された時(初めて格納する時)は0を入れる。
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
@@ -111,7 +112,7 @@ class VendingMachine
   # 格納されているジュースの情報（値段と名前と在庫）を取得できる。
   def current_stock_drink
     @stock_drink.each do |drink|
-      puts "#{drink[0]} -> 種別: #{drink[1]['type']} 値段: #{drink[1]['price']}円 在庫: #{drink[1]['stock']}本"
+      puts "#{drink[0]} -> 種別: #{drink[1]['type']}, 値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
     end
   end
 
