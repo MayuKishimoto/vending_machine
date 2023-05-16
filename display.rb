@@ -1,15 +1,29 @@
 module Display
+  # メッセージ定型文
+  RUNNING_MSG = "稼 働 中".freeze
+
   # ドリンクが取出し口に落ちる音
   FALLING_CAN = ["ｶﾗﾝｺﾛﾝ", "ｶﾞｼｬﾝ", "ｺﾞﾄﾝ"].freeze
   FALLING_BOTTLE = ["ｶﾞｼｬﾝ", "ｺﾞﾄﾝ"].freeze
 
+  # メッセージ表示
+  def display_message(msg)
+    case msg
+    when 1
+      label = RUNNING_MSG.center(15)
+      puts " ------------------"
+      puts "|#{label}|"
+      puts " ------------------"
+    end
+  end
+
   # 金額表示の表現
-  def display_current_money(money)
-    label = money.to_s.rjust(12)
-    puts " -----------------"
-    puts "| 投入金額        |"
+  def display_money(money)
+    label = money.to_s.rjust(13)
+    puts " ------------------"
+    puts "| 投入金額         |"
     puts "| #{label} 円 |"
-    puts " -----------------"
+    puts " ------------------"
   end
 
   # 取り出し口に缶が落ちる表現

@@ -16,6 +16,9 @@ class VendingMachine
     @sale_amount = 0
     # コーラ５本を格納する。
     store(Drink.coke, 5)
+
+    # 稼働中の表示
+    display_message(1)
   end
 
   # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
@@ -24,13 +27,18 @@ class VendingMachine
     # 想定外のもの（１円玉や５円玉。千円札以外のお札、そもそもお金じゃないもの（数字以外のもの）など）
     # が投入された場合は、投入金額に加算せず、それをそのまま釣り銭としてユーザに出力する。
     return false unless MONEY.include?(money)
+
     # 自動販売機にお金を入れる。
     @slot_money += money
+
+    # 金額をディスプレイに表示
+    display_money(@slot_money)
   end
 
   # 投入金額の総計を取得できる。
   def current_slot_money
-    display_current_money(@slot_money)
+    # 金額をディスプレイに表示
+    display_money(@slot_money)
   end
 
   # 投入金額とストックを確認し、購入可能なドリンクのリストを取得する。
