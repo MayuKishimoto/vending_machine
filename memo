@@ -1,3 +1,12 @@
+持ち時間：４５分（説明：１５分）
+①飲み物の属性の管理方法で、他に良い方法はありますか。
+②storeメソッドでドリンクのインスタンスを入れるとき、'Drink.飲み物名'で指定しているが、直感的ではないので飲み物名だけで格納する仕組みはできないか。
+　「def self.coke」という書き方をしてしまったが、selfは省略できるのではないか。selfを２回使ってしまっているが、他に良い書き方はありますか？
+③今回「自販機」「飲み物」「ディスプレイ」ファイルの分け方の基準はありますか？GitHubでイシューを分けて分担して作業しようとしたが、うまく運用できなかった。
+④ドリンクの情報を２次元配列として自販機インスタンスに入れる際の処理は適切でしょうか？
+⑤このような実装のコードを書くとき、何から作るといいでしょうか
+⑥
+
 require '/Users/kishimotomayu/workspace/work/vending_machine/vm.rb'
 vm = VendingMachine.new
 vm.slot_money(100)
@@ -5,8 +14,11 @@ vm.slot_money(50)
 vm.current_slot_money
 vm.purchasable_list
 vm.purchase("coke")
+vm.purchase("water")
 vm.return_money
 vm.store(Drink.redbull, 1)
 vm.store(Drink.water, 1)
 vm.current_stock_drink
 vm.current_sale_amount
+
+vm.store("coke", 1)
