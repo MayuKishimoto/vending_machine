@@ -93,34 +93,6 @@ class VendingMachine
     end
   end
 
-  # ドリンクの形状の表現
-  def drink_shape(drink_name)
-    case @stock_drink[drink_name]['type']
-    # 1(=缶)の場合の表示
-    when 1
-      label = drink_name.center(18)
-      puts " ------------------------"
-      puts "|ミ                      |"
-      puts "|   ==================、 |"
-      puts "|  |                  |  |"
-      puts "|  |#{label}|  |"
-      puts "|   =================〃  |"
-      puts " ------------------------"
-    # 2(=ペットボトル)の場合の表示
-    when 2
-      label = drink_name.center(14)
-      puts " ------------------------"
-      puts "|ミ                      |"
-      puts "|   =============、      |"
-      puts "|  |              ---|   |"
-      puts "|  |#{label}---|   |"
-      puts "|   =============〃      |"
-      puts " ------------------------"
-    else
-      puts "????"
-    end
-  end
-
   # 購入判定（true か falseを出力）
   def purchase_judge(drink_name)
     @slot_money >= @stock_drink[drink_name]['price'] &&
