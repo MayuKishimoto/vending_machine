@@ -95,8 +95,10 @@ class VendingMachine
 
   # 購入判定（true か falseを出力）
   def purchase_judge(drink_name)
-    @slot_money >= @stock_drink[drink_name]['price'] &&
-    @stock_drink[drink_name]['stock'] > 0
+    if @stock_drink.key?(drink_name)
+      @slot_money >= @stock_drink[drink_name]['price'] &&
+      @stock_drink[drink_name]['stock'] > 0
+    end
   end
 
   # 払い戻し操作を行うと、投入金額の総計を釣り銭として出力する。
@@ -113,16 +115,15 @@ class VendingMachine
     # 初めて呼び出された時(初めて格納する時)は0を入れる。
     if @stock_drink[drink.name]['stock'].nil?
       @stock_drink[drink.name]['stock'] = 0
-    end
-
-    # ドリンクをnum回だけ格納する処理
-    num.times {
       @stock_drink[drink.name]['type'] = drink.type
       @stock_drink[drink.name]['vol'] = drink.vol
       @stock_drink[drink.name]['temp'] = drink.type
       @stock_drink[drink.name]['price'] = drink.price
-      @stock_drink[drink.name]['stock'] += 1
-    }
+    end
+
+    # ドリンクをnum回だけ格納する処理
+    num.times {@stock_drink[drink.name]['stock'] += 1}
+
     puts "#{drink.name}を#{num}本補充しました。"
   end
 
@@ -131,7 +132,7 @@ class VendingMachine
     @stock_drink.each do |drink|
       puts
       puts "#{drink[0]}"
-      puts "容器: #{drink[1]['type']}, 容量: #{drink[1]['temp']}ml,  温度: #{drink[1]['temp']},  値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
+      puts "容器: #{drink[1]['type']}, 容量: #{drink[1]['vol']}ml,  温度: #{drink[1]['temp']},  値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
       puts
     end
   end

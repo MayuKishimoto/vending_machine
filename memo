@@ -1,3 +1,12 @@
+①今回の課題の飲み物のような属性の管理方法で、他に良い方法はありますでしょうか。
+②storeメソッドでドリンクのインスタンスを入れるとき、'Drink.coke'等の飲み物のメソッド名で指定しているが、直感的ではないので"coke"のような文字列だけで格納する仕組みはできないか。
+　「def self.coke」という書き方をしてしまったが、selfは省略できるのではないか。selfを２回使ってしまっているが、他に良い書き方はありますでしょうか。
+③GitHubでイシューを分けてメンバーで分担して作業しようとしたが、課題を始める時点でうまくファイルやクラスを分けられず、運用できませんでした。
+　ファイルやクラスの分け方の基準はありますか？
+④ドリンクの情報を２次元配列として自販機インスタンスに入れる際の処理が適切かどうか教えていただきたいです。
+⑤変数名が重複してしまったりして、増えれば増えるほど変数名をつけるのが難しくなります。あまり悩まずに名前をつけれるようなルールなど社内での取り決めがあるのでしょうか。
+⑥実際の現場で使われている便利なツールやエディターの拡張機能などありましたら教えていただきたいです。
+
 require '/Users/kishimotomayu/workspace/work/vending_machine/vm.rb'
 vm = VendingMachine.new
 vm.slot_money(100)
@@ -5,8 +14,11 @@ vm.slot_money(50)
 vm.current_slot_money
 vm.purchasable_list
 vm.purchase("coke")
+vm.purchase("water")
 vm.return_money
 vm.store(Drink.redbull, 1)
 vm.store(Drink.water, 1)
 vm.current_stock_drink
 vm.current_sale_amount
+
+vm.store("coke", 1)
