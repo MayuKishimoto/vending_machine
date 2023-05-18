@@ -132,7 +132,7 @@ class VendingMachine
     @stock_drink.each do |drink|
       puts
       puts "#{drink[0]}"
-      puts "容器: #{drink[1]['type']}, 容量: #{drink[1]['temp']}ml,  温度: #{drink[1]['temp']},  値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
+      puts "容器: #{drink[1]['type']}, 容量: #{drink[1]['vol']}ml,  温度: #{drink[1]['temp']},  値段: #{drink[1]['price']}円, 在庫: #{drink[1]['stock']}本"
       puts
     end
   end
